@@ -277,27 +277,50 @@ function App() {
           </button>
         </header>
         
-        {/* אזור התצוגות במובייל */}
-        <div className="flex-1 overflow-hidden p-3">
-          {mobileTab === '3d' && (
-            <ViewPanel title="תלת-ממד" className="w-full h-full">
-              <ThreeDView islands={islands} />
-            </ViewPanel>
-          )}
-          
-          {mobileTab === '2d' && (
-            <div className="w-full h-full flex flex-col gap-3">
-              <TwoDViews 
-                islands={islands} 
-                activeIslandIdx={activeIslandIdx}
-                isMobile={true}
-              />
+{/* אזור התצוגות במובייל */}
+<div className="flex-1 overflow-hidden p-3 pb-1 flex flex-col">
+  {mobileTab === '3d' && (
+    <ViewPanel title="תלת-ממד" className="w-full h-full">
+      <ThreeDView islands={islands} />
+    </ViewPanel>
+  )}
+  
+  {mobileTab === '2d' && (
+    <div className="w-full h-full overflow-y-auto flex flex-col gap-3">
+      <ViewPanel title="מבט על" className="flex-shrink-0">
+        <div className="w-full p-4 flex items-center justify-center gap-4" style={{ minHeight: '280px', maxHeight: '320px' }}>
+          {islands.map((island, idx) => (
+            <div 
+              key={idx} 
+              className={`flex-1 h-full ${idx === activeIslandIdx ? 'opacity-100' : 'opacity-70'}`}
+            >
+              <Island2D params={island} view="top" />
             </div>
-          )}
+          ))}
         </div>
+      </ViewPanel>
+      
+      <ViewPanel title="מבט חזית" className="flex-shrink-0">
+        <div className="w-full p-4 flex items-center justify-center gap-4" style={{ minHeight: '280px', maxHeight: '320px' }}>
+          {islands.map((island, idx) => (
+            <div 
+              key={idx} 
+              className={`flex-1 h-full ${idx === activeIslandIdx ? 'opacity-100' : 'opacity-70'}`}
+            >
+              <Island2D params={island} view="front" />
+            </div>
+          ))}
+        </div>
+      </ViewPanel>
+    </div>
+  )}
+</div>
         
-        {/* סרגל ניווט תחתון */}
-        <nav className="bg-white border-t border-[color:var(--color-border)] flex">
+{/* סרגל ניווט תחתון */}
+<nav 
+  className="bg-white border-t border-[color:var(--color-border)] flex flex-shrink-0"
+  style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+>
           <TabButton 
             active={mobileTab === '3d'} 
             onClick={() => setMobileTab('3d')}

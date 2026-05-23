@@ -38,6 +38,7 @@ html, body, #root {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
   font-family: 'Inter', system-ui, sans-serif;
   background-color: #F5F1EA;
   color: #1A1410;
@@ -95,4 +96,10 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   border: 2px solid #FFFFFF;
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+/* תמיכה ב-Safe Area Insets במובייל */
+@supports (height: 100dvh) {
+  html, body, #root {
+    height: 100dvh;
+  }
 }
